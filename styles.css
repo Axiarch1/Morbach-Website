@@ -142,6 +142,18 @@ body {
     padding-top: 180px;
     padding-bottom: -20px;
 }
+@media (max-width: 768px) {
+    .hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+}
+@media (max-width: 768px) {
+    .hero-cards {
+        display: none; 
+        
+    }
+}
 
 .hero-content {
     max-width: 629px;
