@@ -110,8 +110,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   // Configuration
   const CONFIG = {
     stackOffset: 24, // Gap between stacked cards in pixels
-    topOffset: '12vh', // Distance from top when stacked
-    stackStartOffset: 0.3, // When to start stacking (0-1, percentage of viewport)
+    topOffsetVh: 12, // Distance from top when stacked (in vh)
   };
 
   // Initialize on DOM ready
@@ -134,76 +133,73 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       return;
     }
 
-    // Set up initial state
+    // Add spacer element after the last card to give it room to fully stack
+    addSpacer(wrapper, cards);
+
+    // Set up each card with its specific sticky top position
     cards.forEach((card, index) => {
       card.dataset.stackIndex = index;
-      card.dataset.locked = 'false';
+      
+      // Set z-index so later cards appear on top
+      card.style.zIndex = index + 1;
     });
 
-    // Handle scroll
-    let ticking = false;
-    
-    function handleScroll() {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          updateCardPositions(cards);
-          ticking = false;
-        });
-        ticking = true;
-      }
-    }
+    // Apply CSS-based sticky positioning
+    applyStackingStyles(cards);
 
-    // Initial calculation
-    updateCardPositions(cards);
-
-    // Listen to scroll
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    // Recalculate on resize
+    let resizeTimeout;
     window.addEventListener('resize', () => {
-      updateCardPositions(cards);
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        // Update spacer height
+        updateSpacerHeight(wrapper, cards);
+        
+        // Recalculate sticky tops based on new viewport
+        cards.forEach((card, index) => {
+          const topOffsetPx = (window.innerHeight * CONFIG.topOffsetVh / 100) + (index * CONFIG.stackOffset);
+          card.style.top = topOffsetPx + 'px';
+        });
+      }, 100);
     }, { passive: true });
   }
 
-  function updateCardPositions(cards) {
-    const viewportHeight = window.innerHeight;
-    const scrollY = window.scrollY;
+  function addSpacer(wrapper, cards) {
+    // Check if spacer already exists
+    let spacer = wrapper.querySelector('.stack-cards-spacer');
+    
+    if (!spacer) {
+      spacer = document.createElement('div');
+      spacer.className = 'stack-cards-spacer';
+      spacer.style.pointerEvents = 'none';
+      wrapper.appendChild(spacer);
+    }
+    
+    updateSpacerHeight(wrapper, cards);
+  }
 
+  function updateSpacerHeight(wrapper, cards) {
+    const spacer = wrapper.querySelector('.stack-cards-spacer');
+    if (!spacer || cards.length === 0) return;
+    
+    // The spacer only needs to be tall enough for the last card to fully stick
+    // This is just a small amount - roughly the stack offset itself
+    const spacerHeight = CONFIG.stackOffset;
+    
+    spacer.style.height = spacerHeight + 'px';
+  }
+
+  function applyStackingStyles(cards) {
     cards.forEach((card, index) => {
-      // Skip if card is already locked in stacked position
-      if (card.dataset.locked === 'true') {
-        return;
-      }
-
-      const cardRect = card.getBoundingClientRect();
-      const cardTop = cardRect.top + scrollY;
+      // Make all cards sticky from the start
+      card.style.position = 'sticky';
       
-      // Calculate the trigger point when card should become sticky
-      const triggerOffset = viewportHeight * 0.12; // 12vh in pixels
-      const triggerPoint = cardTop - triggerOffset;
+      // Each card has its own top value based on its index
+      const topOffsetPx = (window.innerHeight * CONFIG.topOffsetVh / 100) + (index * CONFIG.stackOffset);
+      card.style.top = topOffsetPx + 'px';
       
-      // Check if we've scrolled past the trigger point
-      if (scrollY >= triggerPoint) {
-        // Lock the card in stacked position
-        card.dataset.locked = 'true';
-        card.classList.add('is-stacking');
-        card.style.position = 'sticky';
-        card.style.top = CONFIG.topOffset;
-        
-        // Apply stack offset (each card stacks with offset based on index)
-        const stackPosition = index * CONFIG.stackOffset;
-        card.style.transform = `translateY(${stackPosition}px)`;
-        
-        // Z-index: higher index = on top
-        card.style.zIndex = index + 1;
-        
-      } else {
-        // Card hasn't reached trigger point - normal flow
-        card.dataset.locked = 'false';
-        card.classList.remove('is-stacking');
-        card.style.position = 'relative';
-        card.style.top = 'auto';
-        card.style.transform = 'translateY(0)';
-        card.style.zIndex = index + 1;
-      }
+      // Z-index ensures later cards stack on top
+      card.style.zIndex = index + 1;
     });
   }
 
@@ -213,7 +209,8 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       const wrapper = document.querySelector('[data-stack-cards]');
       if (wrapper) {
         const cards = Array.from(wrapper.querySelectorAll('.stack-card'));
-        updateCardPositions(cards);
+        updateSpacerHeight(wrapper, cards);
+        applyStackingStyles(cards);
       }
     }
   };

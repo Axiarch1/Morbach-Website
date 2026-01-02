@@ -385,7 +385,7 @@
   </div>
 </section>
 
-<!-- Reviews Section - LOGO FIRST, DESCRIPTION ON BACK -->
+<!-- Reviews Section - PRODUCTS CAROUSEL -->
 <section class="reviews-section">
   <div class="reviews-container">
     <!-- Section Header -->
@@ -398,14 +398,30 @@
       </h2>
     </div>
 
-    <!-- Marquee Container -->
-    <div class="marquee-container">
-      <div class="marquee-content">
-        <!-- First set of cards -->
-        <div class="marquee-group">
+    <!-- Carousel Wrapper -->
+    <div class="carousel-wrapper">
+      <div class="carousel-container">
+        <div class="carousel-track">
           
+          <!-- CLONE - Last Card (for seamless left padding) -->
+          <div class="review-card clone-card" aria-hidden="true">
+            <div class="card-flipper">
+              <div class="card-front card-back-product">
+                <img src="Images/cc.png" alt="Cimplycloud Product" class="product-logo-full" />
+              </div>
+              <div class="card-back">
+                <p class="review-text">
+                  A cloud-based system that enables businesses to optimise production, 
+                  manage your business operations and enhance collaboration with suppliers via a 
+                  custom-built web development solution 
+                  that utilises real-time data for enhanced operational excellence.
+                </p>
+              </div>
+            </div>
+          </div>
+
           <!-- PRODUCT CARD 1 - Tepugo -->
-          <div class="review-card">
+          <div class="review-card" data-index="0">
             <div class="card-flipper">
               <!-- Front: Logo -->
               <div class="card-front card-back-product">
@@ -423,7 +439,7 @@
           </div>
 
           <!-- PRODUCT CARD 2 - CENEXIO -->
-          <div class="review-card">
+          <div class="review-card" data-index="1">
             <div class="card-flipper">
               <!-- Front: Logo -->
               <div class="card-front card-back-product">
@@ -441,7 +457,7 @@
           </div>
 
           <!-- PRODUCT CARD 3 - buyyn -->
-          <div class="review-card">
+          <div class="review-card" data-index="2">
             <div class="card-flipper">
               <!-- Front: Logo -->
               <div class="card-front card-back-product">
@@ -459,7 +475,7 @@
           </div>
 
           <!-- PRODUCT CARD 4 - Cimplycloud -->
-          <div class="review-card">
+          <div class="review-card" data-index="3">
             <div class="card-flipper">
               <!-- Front: Logo -->
               <div class="card-front card-back-product">
@@ -477,19 +493,12 @@
             </div>
           </div>
 
-        </div>
-
-        <!-- Duplicate set for seamless loop -->
-        <div class="marquee-group" aria-hidden="true">
-          
-          <!-- DUPLICATE - PRODUCT CARD 1 -->
-          <div class="review-card">
+          <!-- CLONE - First Card -->
+          <div class="review-card clone-card" aria-hidden="true">
             <div class="card-flipper">
-              <!-- Front: Logo -->
               <div class="card-front card-back-product">
                 <img src="Images/tepugo-1.png" alt="Tepugo Product" class="product-logo-full" />
               </div>
-              <!-- Back: Description -->
               <div class="card-back">
                 <p class="review-text">
                   This digital solution works as an all-in-one management tool for restaurant managers 
@@ -500,66 +509,16 @@
             </div>
           </div>
 
-          <!-- DUPLICATE - PRODUCT CARD 2 -->
-          <div class="review-card">
-            <div class="card-flipper">
-              <!-- Front: Logo -->
-              <div class="card-front card-back-product">
-                <img src="Images/cen.jpg" alt="CENEXIO Product" class="product-logo-full" />
-              </div>
-              <!-- Back: Description -->
-              <div class="card-back">
-                <p class="review-text">
-                  The latest in digital infrastructure that provides users with access to an 
-                  e-commerce portal to enhance a customer's 
-                  experience via access to information and management of your business operations.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- DUPLICATE - PRODUCT CARD 3 -->
-          <div class="review-card">
-            <div class="card-flipper">
-              <!-- Front: Logo -->
-              <div class="card-front card-back-product">
-                <img src="Images/by.png" alt="buyyn Product" class="product-logo-full" />
-              </div>
-              <!-- Back: Description -->
-              <div class="card-back">
-                <p class="review-text">
-                  Created to seamlessly be integrated with your e-commerce platform, allowing you to calculate rebate, 
-                  automate incentives and monitor revenue, 
-                  capturing customer purchase behaviour; effectively making operations more efficient.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <!-- DUPLICATE - PRODUCT CARD 4 -->
-          <div class="review-card">
-            <div class="card-flipper">
-              <!-- Front: Logo -->
-              <div class="card-front card-back-product">
-                <img src="Images/cc.png" alt="Cimplycloud Product" class="product-logo-full" />
-              </div>
-              <!-- Back: Description -->
-              <div class="card-back">
-                <p class="review-text">
-                  A cloud-based system that enables businesses to optimise production, 
-                  manage your business operations and enhance collaboration with suppliers via a 
-                  custom-built web development solution 
-                  that utilises real-time data for enhanced operational excellence.
-                </p>
-              </div>
-            </div>
-          </div>
-
         </div>
+      </div>
+
+      <!-- Navigation Dots -->
+      <div class="carousel-dots" role="tablist" aria-label="Product navigation">
       </div>
     </div>
   </div>
 </section>
+
 
 <!-- Scroll Stacking Cards Section -->
 <section class="stack-cards-section">
@@ -669,18 +628,38 @@
 
     </div>
   </div>
-</section>
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="container">
-            <div class="cta-content">
-                <span class="cta-badge">Get started</span>
-                <h2>Ready to transform your workflow?</h2>
-                <p>Equip your team with our integrated cloud tools and strategies to outperform the competition today.</p>
-                <a href="contact.html" class="btn-cta">Get started now</a>
-            </div>
+  </section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-content">
+            <span class="cta-badge">Get started</span>
+            <h2>Ready to transform your workflow?</h2>
+            <p>Equip your team with our integrated cloud tools and strategies to outperform the competition today.</p>
+            
+            <!-- Email Subscription Form -->
+            <form class="cta-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                <div class="form-group">
+                    <div class="email-input-wrapper">
+                        <svg class="email-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M3.33334 3.33334H16.6667C17.5833 3.33334 18.3333 4.08334 18.3333 5.00001V15C18.3333 15.9167 17.5833 16.6667 16.6667 16.6667H3.33334C2.41668 16.6667 1.66668 15.9167 1.66668 15V5.00001C1.66668 4.08334 2.41668 3.33334 3.33334 3.33334Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M18.3333 5L10 10.8333L1.66666 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <input 
+                            type="email" 
+                            class="email-input" 
+                            placeholder="Your Email" 
+                            required
+                            name="email"
+                        />
+                    </div>
+                    <button type="submit" class="btn-submit">Submit</button>
+                </div>
+            </form>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- Footer -->
 <footer class="footer">
@@ -752,5 +731,6 @@
 </footer>
 
     <script src="script.js"></script>
+    <script src="products-carousel.js"></script>
 </body>
 </html>
